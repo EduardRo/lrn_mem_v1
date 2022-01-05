@@ -1,47 +1,51 @@
 import 'dart:convert';
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 Future<List<Album>> fetchAlbum() async {
-  final response = await http.get(Uri.parse(
-      'https://www.matematicon.ro/_teste-grila-json/menu_clasa.php?cls=12'));
+  final response =
+      await http.get(Uri.parse('https://jsonplaceholder.typicode.com/posts/'));
 
-  //print(response.body);
+  // print(response.body);
 
   if (response.statusCode == 200) {
     List<Album> albums = [];
+
     List<dynamic> albumsJson = jsonDecode(response.body);
 
     for (var oneAlbum in albumsJson) {
       Album album = Album.fromJson(oneAlbum);
       albums.add(album);
     }
+    //print(albums);
+    //print(albumsJson[2].title);
+
     return albums;
   } else {
-    throw Exception('Failed to load Array');
+    throw Exception('Failed to load album!');
   }
 }
 
 class Album {
-  final String codClasa;
-  final String codMaterie;
-  final String codSerie;
-  final String denumireSerie;
+  final int userId;
+  final int id;
+  final String title;
+  final String body;
 
   Album(
-      {required this.codClasa,
-      required this.codMaterie,
-      required this.codSerie,
-      required this.denumireSerie});
+      {required this.userId,
+      required this.id,
+      required this.title,
+      required this.body});
 
   factory Album.fromJson(Map<String, dynamic> json) {
     return Album(
-      codClasa: json['codclasa'],
-      codMaterie: json['codmaterie'],
-      codSerie: json['codserie'],
-      denumireSerie: json['denumireserie'],
-    );
+        userId: json['userId'],
+        id: json['id'],
+        title: json['title'],
+        body: json['body']);
   }
 }
 
@@ -82,15 +86,10 @@ class _MyAppState extends State<MyApp> {
                 return ListView.builder(
                     itemCount: resData != null ? resData.length : 0,
                     itemBuilder: (context, index) {
-                      return InkWell(
-                        onTap: () {
-                          resData?[index].codSerie ?? "";
-                        },
-                        child: Card(
-                          child: ListTile(
-                            title: Text(resData?[index].codClasa ?? ""),
-                            subtitle: Text(resData?[index].denumireSerie ?? ""),
-                          ),
+                      return Card(
+                        child: ListTile(
+                          title: Text(resData?[index].title ?? ""),
+                          subtitle: Text(resData?[index].body ?? ""),
                         ),
                       );
                     });

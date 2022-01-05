@@ -48,10 +48,10 @@ class Album {
 
   Album({required this.id, required this.title});
 
-  factory Album.fromJson(Map<String, dynamic> json) {
+  factory Album.fromJson(Map<String, dynamic> json1) {
     return Album(
-      id: json['id'],
-      title: json['title'],
+      id: json1['id'],
+      title: json1['title'],
     );
   }
 }
