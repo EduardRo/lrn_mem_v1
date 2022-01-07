@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lrn_mem_v1/Memorator/screens/menu_clase.dart';
 
 void main() => runApp(const MyApp());
 
@@ -28,7 +29,7 @@ class _MyAppState extends State<MyApp> {
                 onTap: () {
                   // What happens after you tap the navigation item
                   setState(() {
-                    mainWidget = const Teste();
+                    mainWidget = const ButtonsWithName();
                   });
                   Navigator.pop(context);
                 },
@@ -66,7 +67,8 @@ class _MyAppState extends State<MyApp> {
             ],
           ),
         ),
-        body: mainWidget, // Here
+        // ignore: avoid_unnecessary_containers
+        body: mainWidget, //mainWidget, // Here
       ),
     );
   }
@@ -77,7 +79,16 @@ class Teste extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text('teste');
+    return Container(
+      width: 500,
+      height: 1000,
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          fit: BoxFit.fill,
+          image: AssetImage("img/background.jpg"),
+        ),
+      ),
+    );
   }
 }
 
